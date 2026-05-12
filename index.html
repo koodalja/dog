@@ -1,38 +1,82 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>개 고양이 인식 웹 서비스</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개와 고양이 인식 웹 서비스</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="container">
-    <header class="hero">
-      <h1>개 & 고양이 인식 서비스</h1>
-      <p>카메라 화면을 보면서 시작 버튼을 누르면 3초 후에 자동으로 인식합니다.</p>
-    </header>
+    <div class="container">
+        <!-- 제목 -->
+        <div class="header">
+            <h1>🐾 개와 고양이 인식 서비스</h1>
+            <p>카메라에 개나 고양이를 비추고 시작 버튼을 클릭하세요!</p>
+        </div>
 
-    <section class="camera-panel">
-      <div class="video-box">
-        <video id="cameraVideo" autoplay playsinline muted></video>
-      </div>
-      <div class="status-box">
-        <p id="statusText">카메라와 모델을 로딩 중입니다...</p>
-        <p id="countdownText" class="countdown-text"></p>
-      </div>
-    </section>
+        <!-- 호스팅 보안 경고 (HTTPS 필수) -->
+        <div id="https-warning" class="https-warning" style="display: none;">
+            <strong>⚠️ 주의:</strong> 호스팅 환경에서 카메라를 사용하려면 <strong>HTTPS</strong> 연결이 필요합니다.
+        </div>
 
-    <section class="control-panel">
-      <button id="startButton" class="button" disabled>모델 로딩 중...</button>
-      <div class="result-box">
-        <p id="resultText">인식 결과가 여기에 표시됩니다.</p>
-        <p id="confidenceText" class="confidence-text"></p>
-      </div>
-    </section>
-  </main>
+        <!-- 카메라 화면 영역 -->
+        <div class="camera-container">
+            <!-- 실시간 카메라 비디오 표시 -->
+            <video id="camera" autoplay playsinline></video>
+            
+            <!-- 캡처된 이미지 표시 (인식 중일 때) -->
+            <canvas id="capture" style="display: none;"></canvas>
+            
+            <!-- 카메라 에러 메시지 -->
+            <div id="error-message" class="error-hidden"></div>
+        </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.23.0/dist/tf.min.js"></script>
-  <script src="app.js"></script>
+        <!-- 컨트롤 버튼 영역 -->
+        <div class="controls">
+            <!-- 시작 버튼 -->
+            <button id="startBtn" class="btn btn-primary">시작</button>
+            
+            <!-- 다시 시작 버튼 (인식 완료 후 표시) -->
+            <button id="retryBtn" class="btn btn-secondary" style="display: none;">다시 인식</button>
+            
+            <!-- 카운트다운 표시 -->
+            <div id="countdown" class="countdown" style="display: none;">
+                <span id="count">3</span>
+            </div>
+        </div>
+
+        <!-- 인식 결과 표시 영역 -->
+        <div class="result-container">
+            <!-- 인식 중 로딩 표시 -->
+            <div id="loading" class="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>인식 중...</p>
+            </div>
+            
+            <!-- 인식 결과 -->
+            <div id="result" class="result" style="display: none;">
+                <h2>인식 결과</h2>
+                <!-- 인식된 동물 종류 -->
+                <div class="result-animal">
+                    <span id="animalType"></span>
+                </div>
+                <!-- 신뢰도 백분율 -->
+                <div class="result-confidence">
+                    신뢰도: <span id="confidence">0</span>%
+                </div>
+                <!-- 음성 재생 버튼 -->
+                <button id="speakBtn" class="btn btn-audio">🔊 결과 음성 재생</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 음성 재생을 위한 오디오 요소 -->
+    <audio id="audio"></audio>
+
+    <!-- TensorFlow.js 라이브러리 로드 (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.21.0"></script>
+
+    <!-- JavaScript 파일 연결 -->
+    <script src="script.js"></script>
 </body>
 </html>
