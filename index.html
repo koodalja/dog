@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>개 고양이 인식 웹 서비스</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <h1>개 & 고양이 인식 서비스</h1>
+      <p>카메라 화면을 보면서 시작 버튼을 누르면 3초 후에 자동으로 인식합니다.</p>
+    </header>
+
+    <section class="camera-panel">
+      <div class="video-box">
+        <video id="cameraVideo" autoplay playsinline muted></video>
+      </div>
+      <div class="status-box">
+        <p id="statusText">카메라와 모델을 로딩 중입니다...</p>
+        <p id="countdownText" class="countdown-text"></p>
+      </div>
+    </section>
+
+    <section class="control-panel">
+      <button id="startButton" class="button" disabled>모델 로딩 중...</button>
+      <div class="result-box">
+        <p id="resultText">인식 결과가 여기에 표시됩니다.</p>
+        <p id="confidenceText" class="confidence-text"></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.23.0/dist/tf.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
